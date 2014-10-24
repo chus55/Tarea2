@@ -48,6 +48,7 @@ void loopJuego()
     int contador = 4; //Contadores para el Game Over (cuentan el numero de pelotitas restantes)
     int cont2 = 0;
     bool derecha = true;
+    float velocidad = 0.1;
 
     while(true)
     {
@@ -89,18 +90,25 @@ void loopJuego()
         }
         for(list<float>::iterator i=pelotitas_x.begin(); i!=pelotitas_x.end(); i++)
         {
-            (*i)+=0.1;
-            if((*i)>=434)
-                (*i)=0;
-
-//            if(derecha==true)
 //            (*i)+=0.1;
 //            if((*i)>=434)
-//                derecha=false;
-//            if(derecha==false)
-//            (*i)-=0.1;
-//            if((*i)<=0)
-//                derecha=true;
+//                (*i)=0;
+
+            //Este codigo hace que reboten las pelotitas al llegar a los lados de la pantalla, ademas de aumentar velocidad
+            if(contador==3)
+                velocidad=0.3;
+            if(contador==2)
+                velocidad=0.5;
+            if(contador==1)
+                velocidad=0.7;
+            if(derecha==true)
+            (*i)+=velocidad;
+            if((*i)>=434)
+                derecha=false;
+            if(derecha==false)
+            (*i)-=velocidad;
+            if((*i)<=0)
+                derecha=true;
         }
 
         SDL_RenderCopy(renderer, game_background, NULL, &rect_background);
